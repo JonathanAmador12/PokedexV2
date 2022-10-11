@@ -29,7 +29,7 @@ struct HTTPRequestHandler {
                     handler(result)
                     return
                 }else if response.statusCode == 401{
-                    result = .failure(.noAutorize)
+                    result = .failure(.unauthorized)
                     handler(result)
                     return
                 }

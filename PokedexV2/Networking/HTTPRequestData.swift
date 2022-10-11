@@ -7,8 +7,7 @@
 
 import Foundation
 
-// we need to create a Protocol
-
+// Protocol that defines request's structure
 protocol HTTPRequestData {
     associatedtype Response: Decodable
     
@@ -28,8 +27,7 @@ protocol HTTPRequestData {
     func getURLRequest() throws -> URLRequest
 }
 
-// if we want to give it default values, we will create a extancions
-
+// Give it default values to properties through an extension
 extension HTTPRequestData{
     var method: HttpMethod{
         .get
@@ -42,8 +40,8 @@ extension HTTPRequestData{
     }
     
 }
-// we need to create athother extension for we can implement a fucion like a astract funcion
 
+// Give default implementation to the function through an extension
 extension HTTPRequestData{
     func getURLRequest() throws -> URLRequest {
         guard var urlComponets = URLComponents(string: url) else{

@@ -10,6 +10,6 @@ import Foundation
 enum ApiError: Error {
     case badDecoding
     case badUrl
-    case noAutorize
+    case unauthorized
     case badRequest
 }
