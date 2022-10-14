@@ -6,33 +6,38 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct PokemonView: View {
-    
+    @ObservedObject var vm = PokemonViewModel()
     let gridForm = [
         GridItem(.flexible()),
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
     var body: some View {
         ZStack {
-            Color(.white)
+            LinearGradient(gradient: Gradient(colors: [Color("background1"), Color("background2"), Color("background3")]), startPoint: .top, endPoint: .bottom)
             VStack {
                 ScrollView {
                     LazyVGrid(columns: gridForm, spacing: 20) {
-                        ForEach(0...100, id: \.self) { numero in
+                        ForEach(vm.pokemon) { pokemon in
                             VStack {
-                                Rectangle()
-                                    .frame(width: 100, height: 100)
+                                KFImage(URL(string: pokemon.imageUrl))
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 80, height: 80)
                                     .background()
-                                Text("\(numero)")
+                                Text(pokemon.name)
                             }
                         }
                     }
                 }
             }
             .padding()
+        }
+        .onAppear {
+            vm.getPokemos()
         }
     }
 }
