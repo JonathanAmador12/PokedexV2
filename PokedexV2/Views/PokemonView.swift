@@ -15,6 +15,7 @@ struct PokemonView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color("background1"), Color("background2"), Color("background3")]), startPoint: .top, endPoint: .bottom)
@@ -30,6 +31,9 @@ struct PokemonView: View {
                                     .background()
                                 Text(pokemon.name)
                             }
+                            .onAppear{
+                                vm.loadMoreData(name: pokemon.name)
+                            }
                         }
                     }
                 }
@@ -37,7 +41,7 @@ struct PokemonView: View {
             .padding()
         }
         .onAppear {
-            vm.getPokemos()
+            vm.getPokemon()
         }
     }
 }
