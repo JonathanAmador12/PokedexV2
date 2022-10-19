@@ -36,6 +36,9 @@ struct PokemonView: View {
                             }
                         }
                     }
+                    if vm.isLoading{
+                        ProgressView("Loading")
+                    }
                 }
             }
             .padding()
