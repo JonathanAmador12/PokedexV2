@@ -9,10 +9,26 @@ import Foundation
 
 
 class PokemonViewModel: ObservableObject {
-    @Published var pokemon: [PokemonModel] = []
+    @Published var pokemon: [PokemonBaseModel] = []
+    @Published var selectedPokemon: PokemonModel?
+    @Published var isLoading: Bool = false
     private var limit: Int = 21
     private var offset: Int = 0
-    @Published var isLoading: Bool = false
+    
+    func getPokemonDetails(id: Int) {
+        let httpRequestHandler = HTTPRequestHandler()
+        let pokemonDetailsRequest = PokemonDetailsRequest(id: id)
+        httpRequestHandler.requestData(requestData: pokemonDetailsRequest) {[weak self] result in
+            switch (result){
+            case .success(let pokemonDetail):
+                DispatchQueue.main.async {
+                    self?.selectedPokemon = pokemonDetail
+                }
+            case .failure(let error):
+                print("\(error)")
+            }
+        }
+    }
     
     func getPokemon() {
         isLoading = true

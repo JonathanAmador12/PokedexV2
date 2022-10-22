@@ -10,17 +10,19 @@ import SwiftUI
 struct MainView: View {
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color("primary"), Color("background3")]), startPoint: .top, endPoint: .bottom)
-                .ignoresSafeArea()
+            LinearGradient(
+                gradient: Gradient(
+                    colors: [
+                        Color("background1"),
+                        Color("background2"),
+                        Color("background3")
+                    ]
+                ),
+                startPoint: .top,
+                endPoint: .bottom
+            )
+            .ignoresSafeArea()
             VStack {
-                HStack {
-                    Text("Pokedex")
-                        .foregroundColor(.white)
-                        .font(.title)
-                    .fontWeight(.black)
-                    Spacer()
-                }
-                .padding(.horizontal)
                 PokemonView()
             }
         }
