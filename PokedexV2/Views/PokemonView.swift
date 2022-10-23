@@ -15,11 +15,20 @@ struct PokemonView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
-    
+    @State var pokemonId: Int?
+    @State var isActive = false
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color("background1"), Color("background2"), Color("background3")]), startPoint: .top, endPoint: .bottom)
             VStack {
+                HStack {
+                    Text("Pokedex")
+                        .foregroundColor(.white)
+                        .font(.title)
+                        .fontWeight(.black)
+                    Spacer()
+                }
+                .padding()
+                .background(Color("primary"))
                 ScrollView {
                     LazyVGrid(columns: gridForm, spacing: 20) {
                         ForEach(vm.pokemon) { pokemon in
@@ -34,6 +43,10 @@ struct PokemonView: View {
                             .onAppear{
                                 vm.loadMoreData(name: pokemon.name)
                             }
+                            .onTapGesture(count: 1) {
+                                isActive = true
+                                self.pokemonId = pokemon.id
+                            }
                         }
                     }
                     if vm.isLoading{
@@ -41,7 +54,11 @@ struct PokemonView: View {
                     }
                 }
             }
-            .padding()
+            
+            if isActive, let pokemonId = pokemonId {
+                PokemonDetailsView(pokemonId: pokemonId, isActive: $isActive)
+                    .ignoresSafeArea(.all, edges: .bottom)
+            }
         }
         .onAppear {
             vm.getPokemon()
@@ -51,6 +68,6 @@ struct PokemonView: View {
 
 struct PokemonView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonView()
+        PokemonView(pokemonId: 1)
     }
 }

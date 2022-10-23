@@ -8,7 +8,7 @@
 import Foundation
 
 struct PokemonPageRequest: HTTPRequestData {
-    typealias Response = [PokemonModel]
+    typealias Response = [PokemonBaseModel]
     var limit: Int
     var offset: Int
     
